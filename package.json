@@ -1,0 +1,20 @@
+{
+  "name": "prismic-apollo-introspect",
+  "version": "0.0.0",
+  "description": "Prismic introspection utility to generate fragment types for Apollo",
+  "bin": "./index.js",
+  "type": "module",
+  "keywords": [
+    "prismic",
+    "apollo",
+    "introspect",
+    "fragment-types"
+  ],
+  "author": "Madeleine Ostoja",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^7.2.0",
+    "log-symbols": "^5.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}
