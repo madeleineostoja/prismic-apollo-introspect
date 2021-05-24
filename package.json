@@ -12,6 +12,13 @@
   ],
   "author": "Madeleine Ostoja",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madeleineostoja/prismic-apollo-introspect"
+  },
+  "bugs": {
+    "url": "https://github.com/madeleineostoja/prismic-apollo-introspect/issues"
+  },
   "dependencies": {
     "commander": "^7.2.0",
     "log-symbols": "^5.0.0",

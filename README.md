@@ -1,6 +1,6 @@
 # Prismic Apollo Introspect
 
-[![NPM](https://img.shields.io/npm/v/prismic-apollo-introspect)](https://www.npmjs.com/package/prismic-apollo-introspect) [![License](https://img.shields.io/npm/l/prismic-apollo-introspect)](https://github.com/peppercorntsudio/prismic-apollo-introspect/blob/master/LICENSE.md)
+[![NPM](https://img.shields.io/npm/v/prismic-apollo-introspect)](https://www.npmjs.com/package/prismic-apollo-introspect) [![License](https://img.shields.io/npm/l/prismic-apollo-introspect)](https://github.com/madeleineostoja/prismic-apollo-introspect/blob/master/LICENSE.md)
 
 Utility for automatically generating [Prismic fragment types needed for Apollo](https://prismic.io/docs/technologies/introspection-fragment-matching-with-graphql). Without providing introspection fragment matching to Apollo with Prismic, you won't be able to infer Prismic slice fragments.
 
