@@ -43,7 +43,6 @@ You should re-run the introspection generator every time your content model chan
 
 ```json
 {
-  ...,
   "scripts": {
     "predevelop": "prismic-apollo-introspect --repo <repoId> --out <path>",
     "develop": "..."
