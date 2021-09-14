@@ -8,11 +8,20 @@ import fs from 'fs';
 program
   .option('-r, --repo <repoId>', 'prismic repository ID')
   .option('-o, --out <path>', 'Path to output file')
+  .option('-t, --token <accessToken>', 'Path to text file with your access token')
   .parse();
 
-const { repo, out } = program.opts(),
-  prismicApi = `https://${repo}.cdn.prismic.io/api`,
-  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`;
+const { repo, out, token } = program.opts();
+
+let prismicApi = `https://${repo}.cdn.prismic.io/api`,
+  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`,
+  headers = {};
+
+if (token) {
+  const tokenString = fs.readFileSync(token, 'utf-8');
+  prismicApi += `?access_token=${tokenString}`;
+  headers['authorization'] = `Token ${tokenString}`;
+}
 
 async function generateFragmentTypes() {
   const api = await fetch(prismicApi).then((result) => result.json()),
@@ -22,10 +31,10 @@ async function generateFragmentTypes() {
     return;
   }
 
+  headers['prismic-ref'] = ref.ref;
+
   const result = await fetch(fragmentsQuery, {
-    headers: {
-      'prismic-ref': ref.ref,
-    },
+    headers
   }).then((result) => result.json());
 
   const filteredData = result.data.__schema.types.filter(
