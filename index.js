@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import fetch from 'node-fetch';
 import { program } from 'commander';
 import symbols from 'log-symbols';
@@ -10,9 +9,17 @@ program
   .option('-o, --out <path>', 'Path to output file')
   .parse();
 
-const { repo, out } = program.opts(),
-  prismicApi = `https://${repo}.cdn.prismic.io/api`,
-  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`;
+const { repo, out } = program.opts();
+const token = process.env.PRISMIC_TOKEN;
+
+let prismicApi = `https://${repo}.cdn.prismic.io/api`,
+  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`,
+  headers = {};
+
+if (token) {
+  prismicApi += `?access_token=${token}`;
+  headers['authorization'] = `Token ${token}`;
+}
 
 async function generateFragmentTypes() {
   const api = await fetch(prismicApi).then((result) => result.json()),
@@ -22,11 +29,10 @@ async function generateFragmentTypes() {
     return;
   }
 
-  const result = await fetch(fragmentsQuery, {
-    headers: {
-      'prismic-ref': ref.ref,
-    },
-  }).then((result) => result.json());
+  headers['prismic-ref'] = ref.ref;
+
+  const result = await fetch(fragmentsQuery, { headers })
+    .then((result) => result.json());
 
   const filteredData = result.data.__schema.types.filter(
     (type) => type.possibleTypes !== null
