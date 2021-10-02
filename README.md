@@ -54,39 +54,8 @@ You should re-run the introspection generator every time your content model chan
 
 If your Prismic repo requires an access token, set a `PRISMIC_TOKEN` environment variable. The utility will use it to connect to your repo.
 
-You can set the environment variable in three ways:
-
-## Manually
+Eg:
 
 ```sh
 PRISMIC_TOKEN=XXXX prismic-apollo-introspect --repo <repoId> --out <path>
-```
-
-## In your Bash/ZSH config
-
-A more permanent (and secure) way to set the environment variable is in your `.bash_profile/.bashrc/.zshrc`.
-
-```sh
-export PRISMIC_TOKEN="XXXX"
-```
-
-## In an `.env` file
-
-If you need to set environment variables for several projects, an [`.env`](https://nodejs.dev/learn/how-to-read-environment-variables-from-nodejs) file at the project root is a convenient way to manage them. To pass `.env` variables to this utility, use the [`env-cmd` NPM package](https://github.com/toddbluhm/env-cmd):
-
-Install the package:
-
-```sh
-npm i -D env-cmd
-```
-
-Then prepend it to your NPM script:
-
-```js
-{
-  "scripts": {
-    "predevelop": "env-cmd prismic-apollo-introspect --repo <repoId> --out <path>",
-    "develop": "..."
-  }
-}
 ```
