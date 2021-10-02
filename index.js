@@ -9,16 +9,16 @@ program
   .option('-o, --out <path>', 'Path to output file')
   .parse();
 
-const { repo, out } = program.opts();
-const token = process.env.PRISMIC_TOKEN;
-
-let prismicApi = `https://${repo}.cdn.prismic.io/api`,
+const { repo, out } = program.opts(),
+  { PRISMIC_TOKEN } = process.env,
+  prismicApi = `https://${repo}.cdn.prismic.io/api${
+    PRISMIC_TOKEN ? `?access_token=${PRISMIC_TOKEN}` : ''
+  }`,
   fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`,
   headers = {};
 
 if (token) {
-  prismicApi += `?access_token=${token}`;
-  headers['authorization'] = `Token ${token}`;
+  headers.authorization = `Token ${token}`;
 }
 
 async function generateFragmentTypes() {
@@ -31,8 +31,9 @@ async function generateFragmentTypes() {
 
   headers['prismic-ref'] = ref.ref;
 
-  const result = await fetch(fragmentsQuery, { headers })
-    .then((result) => result.json());
+  const result = await fetch(fragmentsQuery, { headers }).then((result) =>
+    result.json()
+  );
 
   const filteredData = result.data.__schema.types.filter(
     (type) => type.possibleTypes !== null
