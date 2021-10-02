@@ -27,10 +27,8 @@ import {
 import Apollo from 'apollo-client';
 import fragmentTypes from '<path-to-generated-fragment-types>';
 
-const prismicApi = 'https://<repo>.cdn.prismic.io/graphql';
-
 export const client = new Apollo({
-  link: PrismicLink({ uri: prismicApi }),
+  link: PrismicLink({ uri: 'https://<repo>.cdn.prismic.io/graphql' }),
   cache: new InMemoryCache({
     fragmentMatcher: new IntrospectionFragmentMatcher({
       introspectionQueryResultData: fragmentTypes,
