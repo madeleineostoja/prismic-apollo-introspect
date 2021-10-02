@@ -27,7 +27,7 @@ import {
 import Apollo from 'apollo-client';
 import fragmentTypes from '<path-to-generated-fragment-types>';
 
-const prismicApi = 'https://your-repo-name.cdn.prismic.io/graphql';
+const prismicApi = 'https://<repo>.cdn.prismic.io/graphql';
 
 export const client = new Apollo({
   link: PrismicLink({ uri: prismicApi }),
