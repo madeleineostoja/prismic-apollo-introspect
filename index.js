@@ -14,11 +14,12 @@ const { repo, out } = program.opts(),
   prismicApi = `https://${repo}.cdn.prismic.io/api${
     PRISMIC_TOKEN ? `?access_token=${PRISMIC_TOKEN}` : ''
   }`,
-  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`,
-  headers = {};
+  fragmentsQuery = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`;
 
-if (token) {
-  headers.authorization = `Token ${token}`;
+let headers = {};
+
+if (PRISMIC_TOKEN) {
+  headers.authorization = `Token ${PRISMIC_TOKEN}`;
 }
 
 async function generateFragmentTypes() {
